@@ -1,0 +1,75 @@
+version: "2"
+services:
+  nginx:
+    image: nginx:1.11.10-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./services/api:/app/api
+      - ./services/portal:/app/portal
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - api
+      - portal
+  api:
+    build: ./services/api
+    volumes:
+      - ./services/api:/app/api
+      - ./xdebug.ini:/etc/php7/conf.d/xdebug.ini
+      - ./.env:/app/api/.env
+    ports:
+      - "8000:8000" # For Artisan Serve
+    depends_on:
+      - db
+      - redis
+    environment:
+      - APP_ENV=${APP_ENV}
+      - APP_DEBUG=${APP_DEBUG}
+      - APP_KEY=${APP_KEY}
+      - APP_LOCALE=en
+      - APP_FALLBACK_LOCALE=en
+      - DB_CONNECTION=${DB_CONNECTION}
+      - DB_HOST=${DB_HOST}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_PORT=6379
+      - REDIS_HOST=redis
+  portal:
+    build: ./services/portal
+    volumes:
+      - ./services/portal:/app/portal
+      - ./xdebug.ini:/etc/php7/conf.d/xdebug.ini
+      - ./.env:/app/portal/.env
+    ports:
+      - "8001:8000" # For Artisan Serve
+    depends_on:
+      - db
+      - redis
+    environment:
+      - APP_ENV=${APP_ENV}
+      - APP_DEBUG=${APP_DEBUG}
+      - APP_KEY=${APP_KEY}
+      - APP_LOCALE=en
+      - APP_FALLBACK_LOCALE=en
+      - DB_CONNECTION=${DB_CONNECTION}
+      - DB_HOST=${DB_HOST}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_PORT=6379
+      - REDIS_HOST=redis
+  redis:
+    image: redis:3.2.8-alpine
+  db:
+    image: wangxian/alpine-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./tmp/data:/var/lib/mysql
