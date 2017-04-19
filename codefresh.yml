@@ -1,0 +1,7 @@
+version: '1.0'
+steps:
+  build_image:
+    type: build
+    description: Building the image...
+    image-name: jerod/php-codefresh
+    tag: master #${{CF_BRANCH}}
