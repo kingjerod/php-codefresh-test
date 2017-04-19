@@ -2,17 +2,33 @@ version: '1.0'
 steps:
   build_api_image:
     type: build
-    description: Building API image...
-    image-name: jerod/codefresh
+    description: Build API image
+    image-name: ryze/ryze-api
     tag: ${{CF_BRANCH}}
     dockerfile: services/api/Dockerfile
+  build_portal_image:
+    type: build
+    description: Build API portal image
+    image-name: ryze/ryze-portal
+    tag: ${{CF_BRANCH}}
+    dockerfile: services/portal/Dockerfile
   push_api_to_aws_ecr:
     type: push
-    description: Pushing to AWS ECR
+    description: Pushing API image to AWS ECR
     candidate: ${{build_api_image}}
     tag: ${{CF_BRANCH}}
     provider: 'ecr'
-    registry: ${{AWS_REGISTRY}}
+    registry: ${{AWS_API_REGISTRY}}
+    accessKeyId: ${{AWS_ACCESS_KEY}}
+    secretAccessKey: ${{AWS_SECRET_KEY}}
+    region: ${{AWS_REGION}}
+  push_portal_to_aws_ecr:
+    type: push
+    description: Pushing portal image to AWS ECR
+    candidate: ${{build_portal_image}}
+    tag: ${{CF_BRANCH}}
+    provider: 'ecr'
+    registry: ${{AWS_PORTAL_REGISTRY}}
     accessKeyId: ${{AWS_ACCESS_KEY}}
     secretAccessKey: ${{AWS_SECRET_KEY}}
     region: ${{AWS_REGION}}
