@@ -1,7 +1,18 @@
 version: '1.0'
 steps:
-  build_image:
+  build_api_image:
     type: build
-    description: Building the image...
-    image-name: jerod/php-codefresh
-    tag: master #${{CF_BRANCH}}
+    description: Building API image...
+    image-name: jerod/codefresh
+    tag: ${{CF_BRANCH}}
+    dockerfile: services/api/Dockerfile
+  push_api_to_aws_ecr:
+    type: push
+    description: Pushing to AWS ECR
+    candidate: ${{build_api_image}}
+    tag: ${{CF_BRANCH}}
+    provider: 'ecr'
+    registry: ${{AWS_REGISTRY}}
+    accessKeyId: ${{AWS_ACCESS_KEY}}
+    secretAccessKey: ${{AWS_SECRET_KEY}}
+    region: ${{AWS_REGION}}
