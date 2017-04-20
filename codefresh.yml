@@ -5,7 +5,8 @@ steps:
     description: Build API image
     image_name: ryze/ryze-api
     tag: ${{CF_SHORT_REVISION}}
-    dockerfile: services/api/Dockerfile
+    working_directory: services/api
+    dockerfile: Dockerfile
   install_api_dependencies:
     image: ${{build_api_image}}
     fail_fast: false
@@ -16,7 +17,8 @@ steps:
     description: Build API portal image
     image_name: ryze/ryze-portal
     tag: ${{CF_SHORT_REVISION}}
-    dockerfile: services/portal/Dockerfile
+    working_directory: services/portal
+    dockerfile: Dockerfile
   install_portal_dependencies:
     image: ${{build_portal_image}}
     fail_fast: false
@@ -27,7 +29,8 @@ steps:
     description: Build Nginx image
     image_name: ryze/ryze-nginx
     tag: ${{CF_SHORT_REVISION}}
-    dockerfile: services/nginx/Dockerfile
+    working_directory: services/nginx
+    dockerfile: Dockerfile
   push_api_to_aws_ecr:
     type: push
     description: Pushing API image to AWS ECR
