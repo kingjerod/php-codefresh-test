@@ -22,6 +22,12 @@ steps:
     fail_fast: false
     commands:
       - cd services/portal && composer install
+  build_nginx_image:
+    type: build
+    description: Build Nginx image
+    image_name: ryze/ryze-nginx
+    tag: ${{CF_SHORT_REVISION}}
+    dockerfile: services/nginx/Dockerfile
   push_api_to_aws_ecr:
     type: push
     description: Pushing API image to AWS ECR
@@ -39,6 +45,16 @@ steps:
     tag: ${{CF_SHORT_REVISION}}
     provider: 'ecr'
     registry: ${{AWS_PORTAL_REGISTRY}}
+    accessKeyId: ${{AWS_ACCESS_KEY}}
+    secretAccessKey: ${{AWS_SECRET_KEY}}
+    region: ${{AWS_REGION}}
+  push_nginx_to_aws_ecr:
+    type: push
+    description: Pushing nginx image to AWS ECR
+    candidate: ${{build_portal_image}}
+    tag: ${{CF_SHORT_REVISION}}
+    provider: 'ecr'
+    registry: ${{AWS_NGINX_REGISTRY}}
     accessKeyId: ${{AWS_ACCESS_KEY}}
     secretAccessKey: ${{AWS_SECRET_KEY}}
     region: ${{AWS_REGION}}
