@@ -3,20 +3,30 @@ steps:
   build_api_image:
     type: build
     description: Build API image
-    image-name: ryze/ryze-api
-    tag: ${{CF_BRANCH}}
+    image_name: ryze/ryze-api
+    tag: ${{CF_SHORT_REVISION}}
     dockerfile: services/api/Dockerfile
+  install_api_dependencies:
+    image: ${{build_api_image}}
+    fail-fast: false
+    commands:
+      - composer install
   build_portal_image:
     type: build
     description: Build API portal image
-    image-name: ryze/ryze-portal
-    tag: ${{CF_BRANCH}}
+    image_name: ryze/ryze-portal
+    tag: ${{CF_SHORT_REVISION}}
     dockerfile: services/portal/Dockerfile
+  install_portal_dependencies:
+    image: ${{build_portal_image}}
+    fail-fast: false
+    commands:
+      - composer install
   push_api_to_aws_ecr:
     type: push
     description: Pushing API image to AWS ECR
     candidate: ${{build_api_image}}
-    tag: ${{CF_BRANCH}}
+    tag: ${{CF_SHORT_REVISION}}
     provider: 'ecr'
     registry: ${{AWS_API_REGISTRY}}
     accessKeyId: ${{AWS_ACCESS_KEY}}
@@ -26,7 +36,7 @@ steps:
     type: push
     description: Pushing portal image to AWS ECR
     candidate: ${{build_portal_image}}
-    tag: ${{CF_BRANCH}}
+    tag: ${{CF_SHORT_REVISION}}
     provider: 'ecr'
     registry: ${{AWS_PORTAL_REGISTRY}}
     accessKeyId: ${{AWS_ACCESS_KEY}}
