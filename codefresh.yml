@@ -44,7 +44,7 @@ steps:
   push_nginx_to_aws_ecr:
     type: push
     description: Pushing nginx image to AWS ECR
-    candidate: ${{build_portal_image}}
+    candidate: ${{build_nginx_image}}
     tag: ${{CF_SHORT_REVISION}}
     provider: 'ecr'
     registry: ${{AWS_NGINX_REGISTRY}}
