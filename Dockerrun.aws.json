@@ -14,8 +14,8 @@
       "memory": 128
     },
     {
-      "name": "nginx",
-      "image": "nginx",
+      "name": "ryze-nginx",
+      "image": "025705197927.dkr.ecr.us-west-2.amazonaws.com/ryze/ryze-nginx",
       "essential": true,
       "memory": 128,
       "portMappings": [
@@ -27,20 +27,9 @@
       "links": [
         "ryze-api"
       ],
-      "mountPoints": [
+      "volumesFrom": [
         {
-          "sourceVolume": "php-app",
-          "containerPath": "/var/www/html",
-          "readOnly": true
-        },
-        {
-          "sourceVolume": "nginx-proxy-conf",
-          "containerPath": "/etc/nginx/conf.d",
-          "readOnly": true
-        },
-        {
-          "sourceVolume": "awseb-logs-nginx-proxy",
-          "containerPath": "/var/log/nginx"
+          "sourceContainer": "ryze-api"
         }
       ]
     }
