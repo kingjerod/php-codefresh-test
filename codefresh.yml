@@ -25,7 +25,7 @@ steps:
     type: push
     description: Pushing API image to AWS ECR
     candidate: ${{build_api_image}}
-    tag: ${{CF_SHORT_REVISION}}
+    tag: latest
     provider: 'ecr'
     registry: ${{AWS_API_REGISTRY}}
     accessKeyId: ${{AWS_ACCESS_KEY}}
@@ -45,7 +45,7 @@ steps:
     type: push
     description: Pushing nginx image to AWS ECR
     candidate: ${{build_nginx_image}}
-    tag: ${{CF_SHORT_REVISION}}
+    tag: latest
     provider: 'ecr'
     registry: ${{AWS_NGINX_REGISTRY}}
     accessKeyId: ${{AWS_ACCESS_KEY}}
