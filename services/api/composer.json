@@ -1,4 +1,10 @@
 {
+    "name": "ryze/api",
+    "authors": [
+        {
+            "name": "Jerod King"
+        }
+    ],
     "require": {
         "phpunit/php-timer": "^1.0"
     }
