@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "704f668038edbdb337caf2877f608141",
-    "content-hash": "c03a6967e6acdc40b763464a6476c963",
+    "hash": "b27ed700766194ab702ca5e8c927f415",
+    "content-hash": "42c33a9d4c212a57d8854dfedbe4fa18",
     "packages": [
         {
             "name": "phpunit/php-timer",
