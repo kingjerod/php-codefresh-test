@@ -4,20 +4,20 @@
     {
       "name": "api",
       "image": "025705197927.dkr.ecr.us-west-2.amazonaws.com/ryze/ryze-api",
+      "essential": true,
+      "memory": 256,
       "environment": [
         {
           "name": "Container",
           "value": "PHP"
         }
-      ],
-      "essential": true,
-      "memory": 128
+      ]
     },
     {
       "name": "nginx",
       "image": "025705197927.dkr.ecr.us-west-2.amazonaws.com/ryze/ryze-nginx",
       "essential": true,
-      "memory": 128,
+      "memory": 256,
       "portMappings": [
         {
           "hostPort": 80,
