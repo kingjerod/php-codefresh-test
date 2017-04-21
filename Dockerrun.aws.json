@@ -2,7 +2,7 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "ryze-api",
+      "name": "api",
       "image": "025705197927.dkr.ecr.us-west-2.amazonaws.com/ryze/ryze-api",
       "environment": [
         {
@@ -14,7 +14,7 @@
       "memory": 128
     },
     {
-      "name": "ryze-nginx",
+      "name": "nginx",
       "image": "025705197927.dkr.ecr.us-west-2.amazonaws.com/ryze/ryze-nginx",
       "essential": true,
       "memory": 128,
@@ -24,12 +24,10 @@
           "containerPort": 80
         }
       ],
-      "links": [
-        "ryze-api"
-      ],
+      "links": ["api"],
       "volumesFrom": [
         {
-          "sourceContainer": "ryze-api"
+          "sourceContainer": "api"
         }
       ]
     }
