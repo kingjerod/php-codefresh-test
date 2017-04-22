@@ -1,13 +1,33 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = new Dotenv\Dotenv(__DIR__ . '/../');
-$dotenv->load();
+try {
+    require __DIR__ . '/../vendor/autoload.php';
+} catch (\Exception $ex) {
+    die('Failed to load autoload.php file.');
+}
 
+try {
+    $dotenv = new Dotenv\Dotenv(__DIR__ . '/..');
+    $dotenv->load();
+} catch (\Exception $ex) {
+    echo "Did not load .env file. This is ok in production.<br />";
+}
 
-PHP_Timer::start();
-echo "This is the the API page!<br />";
-echo "DB_HOST: " . getenv('DB_HOST') . "<br />";
-echo "DB_DATABASE: " . getenv('DB_DATABASE') . "<br />";
-echo "DB_USERNAME: " . getenv('DB_USERNAME') . "<br />";
-echo PHP_Timer::resourceUsage();
+try {
+    PHP_Timer::start();
+    echo "This is the the API page!<br />";
+
+    $vars = ['DB_HOST', 'DB_DATABASE', 'DB_USERNAME', 'ASS'];
+
+    foreach($vars as $var) {
+        if (getenv($var)) {
+            echo $var . ": " . getenv($var) . "<br />";
+        } else {
+            echo "No " . $var . " env var set.<br />";
+        }
+    }
+
+    echo PHP_Timer::resourceUsage();
+} catch (\Exception $ex) {
+    echo "PHP exception: " . $ex->getMessage();
+}
