@@ -1,18 +1,18 @@
 <?php
-echo "Why u no work.";
-//
-//try {
-//    require __DIR__ . '/../vendor/autoload.php';
-//} catch (\Exception $ex) {
-//    die('Failed to load autoload.php file.');
-//}
-//
-//try {
-//    $dotenv = new Dotenv\Dotenv(__DIR__ . '/..');
-//    $dotenv->load();
-//} catch (\Exception $ex) {
-//    echo "Did not load .env file. This is ok in production.<br />";
-//}
+
+try {
+    require __DIR__ . '/../vendor/autoload.php';
+} catch (\Exception $ex) {
+    die('Failed to load autoload.php file.');
+}
+
+try {
+    $dotenv = new Dotenv\Dotenv(__DIR__ . '/..');
+    $dotenv->load();
+} catch (\Exception $ex) {
+    echo "Did not load .env file. This is ok in production.<br />";
+}
+echo "Work dangit";
 //
 //try {
 //    PHP_Timer::start();
