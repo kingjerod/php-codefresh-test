@@ -2,32 +2,27 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "api",
-      "image": "025705197927.dkr.ecr.us-west-2.amazonaws.com/ryze/ryze-api",
+      "name": "ryze-api-php",
+      "image": "025705197927.dkr.ecr.us-west-2.amazonaws.com/ryze/ryze-api:latest",
+      "memory": 500,
       "essential": true,
-      "memory": 256,
-      "environment": [
-        {
-          "name": "Container",
-          "value": "PHP"
-        }
-      ]
+      "links": ["ryze-nginx"]
     },
     {
-      "name": "nginx",
-      "image": "025705197927.dkr.ecr.us-west-2.amazonaws.com/ryze/ryze-nginx",
+      "name": "ryze-nginx",
+      "image": "025705197927.dkr.ecr.us-west-2.amazonaws.com/ryze/ryze-nginx:latest",
       "essential": true,
-      "memory": 256,
+      "memory": 128,
       "portMappings": [
         {
           "hostPort": 80,
           "containerPort": 80
         }
       ],
-      "links": ["api"],
+      "links": ["ryze-api-php"],
       "volumesFrom": [
         {
-          "sourceContainer": "api"
+          "sourceContainer": "ryze-api-php"
         }
       ]
     }

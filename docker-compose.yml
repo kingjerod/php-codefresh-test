@@ -1,6 +1,6 @@
 version: "2"
 services:
-  nginx:
+  ryze-nginx:
     build: ./services/nginx
     ports:
       - "80:80"
@@ -13,7 +13,7 @@ services:
     depends_on:
       - api
       - portal
-  api:
+  ryze-api-php:
     build: ./services/api
     volumes:
       - ./services/api:/app/api
