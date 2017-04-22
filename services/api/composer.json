@@ -7,6 +7,7 @@
     ],
     "require": {
         "phpunit/php-timer": "^1.0",
-        "nesbot/carbon": "^1.22"
+        "nesbot/carbon": "^1.22",
+        "vlucas/phpdotenv": "^2.4"
     }
 }

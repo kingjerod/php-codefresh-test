@@ -5,8 +5,7 @@
       "name": "ryze-api-php",
       "image": "025705197927.dkr.ecr.us-west-2.amazonaws.com/ryze/ryze-api:latest",
       "memory": 500,
-      "essential": true,
-      "links": ["ryze-nginx"]
+      "essential": true
     },
     {
       "name": "ryze-nginx",

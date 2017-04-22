@@ -8,11 +8,11 @@ services:
     volumes:
       - ./services/nginx/nginx-dev.conf:/etc/nginx/nginx.conf
     volumes_from:
-      - api
-      - portal
+      - ryze-api-php
+      - ryze-portal-php
     depends_on:
-      - api
-      - portal
+      - ryze-api-php
+      - ryze-portal-php
   ryze-api-php:
     build: ./services/api
     volumes:
@@ -24,20 +24,7 @@ services:
     depends_on:
       - db
       - redis
-    environment:
-      - APP_ENV=${APP_ENV}
-      - APP_DEBUG=${APP_DEBUG}
-      - APP_KEY=${APP_KEY}
-      - APP_LOCALE=en
-      - APP_FALLBACK_LOCALE=en
-      - DB_CONNECTION=${DB_CONNECTION}
-      - DB_HOST=${DB_HOST}
-      - DB_DATABASE=${DB_DATABASE}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - REDIS_PORT=6379
-      - REDIS_HOST=redis
-  portal:
+  ryze-portal-php:
     build: ./services/portal
     volumes:
       - ./services/portal:/app/portal
@@ -48,19 +35,6 @@ services:
     depends_on:
       - db
       - redis
-    environment:
-      - APP_ENV=${APP_ENV}
-      - APP_DEBUG=${APP_DEBUG}
-      - APP_KEY=${APP_KEY}
-      - APP_LOCALE=en
-      - APP_FALLBACK_LOCALE=en
-      - DB_CONNECTION=${DB_CONNECTION}
-      - DB_HOST=${DB_HOST}
-      - DB_DATABASE=${DB_DATABASE}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - REDIS_PORT=6379
-      - REDIS_HOST=redis
   redis:
     image: redis:3.2.8-alpine
   db:
