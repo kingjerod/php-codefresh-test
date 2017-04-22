@@ -7,7 +7,7 @@ try {
 }
 
 try {
-    $dotenv = new Dotenv\Dotenv(__DIR__ . '/..');
+    //$dotenv = new Dotenv\Dotenv(__DIR__ . '/..');
     //$dotenv->load();
 } catch (\Exception $ex) {
     echo "Did not load .env file. This is ok in production.<br />";
