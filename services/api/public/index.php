@@ -12,7 +12,8 @@ try {
 } catch (\Exception $ex) {
     echo "Did not load .env file. This is ok in production.<br />";
 }
-echo "Work dangit";
+
+echo "Work dangit!";
 //
 //try {
 //    PHP_Timer::start();
