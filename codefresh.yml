@@ -4,28 +4,34 @@ steps:
     type: build
     description: Build API image
     image_name: ryze/ryze-api
-    tag: ${{CF_SHORT_REVISION}}
+    tag: '${{CF_SHORT_REVISION}}'
     working_directory: services/api
     dockerfile: Dockerfile
+    environment:
+      - DB_HOST='${{DB_HOST}}'
+      - DB_DATABASE='${{DB_DATABASE}}'
   build_portal_image:
     type: build
     description: Build API portal image
     image_name: ryze/ryze-portal
-    tag: ${{CF_SHORT_REVISION}}
+    tag: '${{CF_SHORT_REVISION}}'
     working_directory: services/portal
     dockerfile: Dockerfile
+    environment:
+      - DB_HOST='${{DB_HOST}}'
+      - DB_DATABASE='${{DB_DATABASE}}'
   build_nginx_image:
     type: build
     description: Build Nginx image
     image_name: ryze/ryze-nginx
-    tag: ${{CF_SHORT_REVISION}}
+    tag: '${{CF_SHORT_REVISION}}'
     working_directory: services/nginx
     dockerfile: Dockerfile
   push_api_to_aws_ecr:
     type: push
     description: Pushing API image to AWS ECR
     candidate: ${{build_api_image}}
-    tag: latest
+    tag: 'latest'
     provider: 'ecr'
     registry: ${{AWS_API_REGISTRY}}
     accessKeyId: ${{AWS_ACCESS_KEY}}
@@ -35,7 +41,7 @@ steps:
     type: push
     description: Pushing portal image to AWS ECR
     candidate: ${{build_portal_image}}
-    tag: ${{CF_SHORT_REVISION}}
+    tag: '${{CF_SHORT_REVISION}}'
     provider: 'ecr'
     registry: ${{AWS_PORTAL_REGISTRY}}
     accessKeyId: ${{AWS_ACCESS_KEY}}
@@ -45,9 +51,18 @@ steps:
     type: push
     description: Pushing nginx image to AWS ECR
     candidate: ${{build_nginx_image}}
-    tag: latest
+    tag: 'latest'
     provider: 'ecr'
     registry: ${{AWS_NGINX_REGISTRY}}
     accessKeyId: ${{AWS_ACCESS_KEY}}
     secretAccessKey: ${{AWS_SECRET_KEY}}
     region: ${{AWS_REGION}}
+  deploy-elastic-beanstalk:
+      fail-fast: false
+      image: garland/aws-cli-docker:latest
+      commands:
+       - sh -c  "aws configure set region '${{AWS_REGION}}' && aws elasticbeanstalk update-environment --environment-name '${{AWS_ENV_NAME}}' --version-label '${{CF_SHORT_REVISION}}' "
+      when:
+        condition:
+          all:
+            masterBranch: "'${{CF_BRANCH}}' == '${{AWS_BRANCH}}'"
