@@ -15,7 +15,7 @@ try {
 
 try {
     PHP_Timer::start();
-    echo "This is the the API v1!<br />";
+    echo "This is the the API v1! Hello Jerod!<br />";
 
     $vars = ['DB_HOST', 'DB_DATABASE', 'DB_USERNAME'];
 
