@@ -55,8 +55,8 @@ steps:
       fail-fast: false
       image: garland/aws-cli-docker:latest
       commands:
-       - sh -c  "aws configure set region '${{AWS_REGION}}' && aws elasticbeanstalk update-environment --environment-name '${{AWS_ENV_NAME}}' --version-label '${{CF_SHORT_REVISION}}' "
+       - sh -c  "aws configure set region '${{AWS_REGION}}' && aws elasticbeanstalk update-environment --application-name '${{AWS_EB_APP_NAME}}' --environment-name '${{AWS_EB_ENV_NAME}}' --version-label '{{AWS_EB_VERSION}}'"
       when:
         condition:
           all:
-            masterBranch: "'${{CF_BRANCH}}' == '${{AWS_BRANCH}}'"
+            masterBranch: "'${{CF_BRANCH}}' == 'master'"
