@@ -10,12 +10,12 @@ try {
     $dotenv = new Dotenv\Dotenv(__DIR__ . '/../');
     $dotenv->load();
 } catch (\Exception $ex) {
-    echo "Did not load .env file. This is ok in production.<br />";
+
 }
 
 try {
     PHP_Timer::start();
-    echo "This is the the API v1! Hello Jerod!<br />";
+    echo "<h2>This is the the API v1! Hello Jerod!</h2><br />";
 
     $vars = ['DB_HOST', 'DB_DATABASE', 'DB_USERNAME'];
 
