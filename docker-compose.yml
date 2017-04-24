@@ -19,6 +19,8 @@ services:
       - ./services/api:/app/api
       - ./xdebug.ini:/etc/php7/conf.d/xdebug.ini
       - ./.env:/app/api/.env
+    environment:
+      DB_HOST: test.db.host
     ports:
       - "8000:8000" # For Artisan Serve
     depends_on:
