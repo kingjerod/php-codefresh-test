@@ -28,8 +28,8 @@ steps:
     tag: 'latest'
     provider: 'ecr'
     registry: ${{AWS_API_REGISTRY}}
-    accessKeyId: ${{AWS_ACCESS_KEY}}
-    secretAccessKey: ${{AWS_SECRET_KEY}}
+    accessKeyId: ${{AWS_ACCESS_KEY_ID}}
+    secretAccessKey: ${{AWS_SECRET_ACCESS_KEY}}
     region: ${{AWS_REGION}}
   push_portal_to_aws_ecr:
     type: push
@@ -38,8 +38,8 @@ steps:
     tag: '${{CF_SHORT_REVISION}}'
     provider: 'ecr'
     registry: ${{AWS_PORTAL_REGISTRY}}
-    accessKeyId: ${{AWS_ACCESS_KEY}}
-    secretAccessKey: ${{AWS_SECRET_KEY}}
+    accessKeyId: ${{AWS_ACCESS_KEY_ID}}
+    secretAccessKey: ${{AWS_SECRET_ACCESS_KEY}}
     region: ${{AWS_REGION}}
   push_nginx_to_aws_ecr:
     type: push
@@ -48,11 +48,11 @@ steps:
     tag: 'latest'
     provider: 'ecr'
     registry: ${{AWS_NGINX_REGISTRY}}
-    accessKeyId: ${{AWS_ACCESS_KEY}}
-    secretAccessKey: ${{AWS_SECRET_KEY}}
+    accessKeyId: ${{AWS_ACCESS_KEY_ID}}
+    secretAccessKey: ${{AWS_SECRET_ACCESS_KEY}}
     region: ${{AWS_REGION}}
-  deploy-elastic-beanstalk:
-      fail-fast: false
+  deploy_elastic_beanstalk:
+      fail_fast: false
       image: garland/aws-cli-docker:latest
       commands:
        - sh -c  "aws configure set region '${{AWS_REGION}}' && aws elasticbeanstalk update-environment --application-name '${{AWS_EB_APP_NAME}}' --environment-name '${{AWS_EB_ENV_NAME}}' --version-label '{{AWS_EB_VERSION}}'"
